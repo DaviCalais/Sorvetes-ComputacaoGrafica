@@ -1,0 +1,185 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <GL/glut.h>
+#include <math.h>
+
+#define PI 3.141592653898
+#define janela_altura 600
+#define janela_largura 600
+
+
+void resize(GLsizei w, GLsizei h);
+void display(void);
+
+
+int main(int arcg, char** arcv)
+{
+	glutInit(&arcg, arcv);
+
+	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+
+	glutInitWindowSize(janela_altura, janela_largura);
+
+	glutInitWindowPosition(10, 300);
+
+	glutCreateWindow("Glut Circulo - Davi Calais Souza");
+
+	glutReshapeFunc(&resize);
+
+	glutDisplayFunc(display);
+
+	glutMainLoop();
+
+	return EXIT_SUCCESS;
+
+}
+
+void desenhar() 
+{
+	glPushMatrix();
+
+	glTranslatef(225, 0, 0);
+
+	GLfloat circ_pnt = 100;
+	GLfloat ang, raioX = 60.0f, raioY = 85.0f;
+
+	glColor3f(1.0, 1.0, 1.0);
+
+	glBegin(GL_POLYGON);
+
+	for (int i = 0; i < circ_pnt; i++)
+	{
+		ang = (2 * PI * i) / circ_pnt;
+		glVertex2f(cos(ang) * raioX, sin(ang) * raioY);
+		printf("%f    %f\n", cos(ang) * raioX, sin(ang) * raioY);
+
+	}
+	glEnd();
+
+	glPopMatrix();
+
+	glPushMatrix();
+
+	glTranslatef(-225, 0, 0);
+
+	glColor3f(1, 1, 0);
+	glBegin(GL_TRIANGLES);
+	glVertex3f(40.0, 40.0, 0.0);
+	glVertex3f(-40.0, 40.0, 0.0);
+	glVertex3f(-10.0, -60.0, 0.0);
+	glEnd();
+
+	glPopMatrix();
+
+	glColor3f(1, 1, 0);
+	glBegin(GL_TRIANGLES);
+	glVertex3f(40.0, 40.0, 0.0);
+	glVertex3f(-40.0, 40.0, 0.0);
+	glVertex3f(-10.0, -60.0, 0.0);
+	glEnd();
+
+	glPushMatrix();
+
+	glTranslatef(-240, 55, 0);
+
+	GLfloat bola1 = 100;
+	GLfloat ang1, raioX1 = 30.0f, raioY1 = 30.0f;
+
+	glColor3f(1.0, 0.0, 1.0);
+
+	glBegin(GL_POLYGON);
+
+	for (int i = 0; i < bola1; i++)
+	{
+		ang1 = (2 * PI * i) / bola1;
+		glVertex2f(cos(ang1) * raioX1, sin(ang1) * raioY1);
+		printf("%f    %f\n", cos(ang1) * raioX, sin(ang1) * raioY1);
+
+	}
+	glEnd();
+
+	glPushMatrix();
+
+	glTranslatef(30, 0, 0);
+
+	glColor3f(1.0, 0.0, 0.0);
+
+	glBegin(GL_POLYGON);
+
+	for (int i = 0; i < bola1; i++)
+	{
+		ang1 = (2 * PI * i) / bola1;
+		glVertex2f(cos(ang1) * raioX1, sin(ang1) * raioY1);
+		printf("%f    %f\n", cos(ang1) * raioX, sin(ang1) * raioY1);
+
+	}
+	glEnd();
+
+	glPushMatrix();
+
+	glTranslatef(195, 0, 0);
+
+	glColor3f(1.0, 0.0, 0.0);
+
+	glBegin(GL_POLYGON);
+
+	for (int i = 0; i < bola1; i++)
+	{
+		ang1 = (2 * PI * i) / bola1;
+		glVertex2f(cos(ang1) * raioX1, sin(ang1) * raioY1);
+		printf("%f    %f\n", cos(ang1) * raioX, sin(ang1) * raioY1);
+
+	}
+	glEnd();
+	
+	glPushMatrix();
+
+	glTranslatef(30, 0, 0);
+
+	glColor3f(1.0, 0.0, 1.0);
+
+	glBegin(GL_POLYGON);
+
+	for (int i = 0; i < bola1; i++)
+	{
+		ang1 = (2 * PI * i) / bola1;
+		glVertex2f(cos(ang1) * raioX1, sin(ang1) * raioY1);
+		printf("%f    %f\n", cos(ang1) * raioX, sin(ang1) * raioY1);
+
+	}
+	glEnd();
+
+
+}
+
+void resize(GLsizei w, GLsizei h)
+{
+	if (h == 0)
+		h = 1;
+
+	glViewport(0, 0, w, h);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
+	if (w <= h) {
+		gluOrtho2D(0.0f, janela_altura, 0.0f, janela_largura * h / w);
+	}
+	else {
+		gluOrtho2D(0.0f, janela_altura * w / h, 0.0f, janela_largura);
+	}
+	glMatrixMode(GL_MODELVIEW);
+}
+
+void display() {
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glClearColor(0.0f, 0.0f, 1.0f, 0.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+	glTranslatef(janela_altura / 2, janela_largura / 2, 0.0f);
+
+	glViewport(0, 0, janela_largura, janela_altura);
+	desenhar();
+
+	glFlush();
+}
